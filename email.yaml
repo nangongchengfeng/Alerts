@@ -1,0 +1,17 @@
+send:
+  smtp_host: smtp.q11q.com
+  send_user: 3291795245@qq.com
+  send_addr: 3291795245@qq.com
+  send_pass: ffuffzmeldqjcjai
+email:
+  - name: ops   # 要和team对应
+    receive_addr:
+      - 1794748404@qq.com
+      - 3063254779@qq.com
+  #    - 645102187@qq.com
+#      - 邮件地址2
+#      - 邮件地址3
+#  - name: ops
+#    receive_addr:
+#      - 邮件地址1
+#      - 邮件地址2

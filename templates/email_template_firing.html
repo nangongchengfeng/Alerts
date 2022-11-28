@@ -1,0 +1,49 @@
+<meta http-equiv="Content-Type"content="text/html;charset=utf-8">
+<html align='left'>
+    <body>
+        <h2 style="font-size: x-large;">{{ prometheus_monitor_info['commonLabels']['cloud'] }}--监控告警通知</h2><br/>
+        <br>
+    <table border="1" width = "100%" cellspacing='0' cellpadding='0' align='left'>
+    <tr>
+        <!--监控类型：系统层级，业务层级，服务层级等等-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">监控类别</th>
+        <!--状态：报警通知还是恢复通知-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">状态</th>
+        <!--状态：级别：报警级别-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">级别</th>
+        <!--状态：实例：机器地址-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">实例</th>
+        <!--状态：描述：报警描述-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">描述</th>
+        <!--状态：详细描述：报警详细描述-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">详细描述</th>
+        <!--状态：开始时间：报警开始时间-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">开始时间</th>
+        <!--状态：开始时间：报警结束时间-->
+        <th style="font-size: 20px; padding: 5px; background-color: #F3AE60">结束时间</th>
+    </tr>
+    {% for items in prometheus_monitor_info['alerts'] %}
+    <tr align='center'>
+        {% if loop.first %}
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #F3AE60" rowspan="{{ loop.length }}">{{ prometheus_monitor_info['commonLabels']['alertname'] }}</td>
+        {% endif %}
+        {% if items['status'] == 'firing' %}
+        <td style="font-size: 16px; padding: 3px; background-color: red; word-wrap: break-word">告警</td>
+        {% else %}
+        <td style="font-size: 16px; padding: 3px; background-color: green; word-wrap: break-word">恢复</td>
+        {% endif %}
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #EBE4D3">{{ items['labels']['severity'] }}</td>
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #EBE4D3">{{ items['labels']['instance'] }}</td>
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #EBE4D3">{{ items['annotations']['summary'] }}</td>
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #EBE4D3">{{ items['annotations']['description'] }}</td>
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #EBE4D3">{{ items['startsAt'] }}</td>
+        {% if items['endsAt'] == '0001-01-01T00:00:00Z' %}
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #EBE4D3">00:00:00:00</td>
+        {% else %}
+        <td style="font-size: 16px; padding: 3px; word-wrap: break-word; background-color: #3DE869">{{ items['endsAt'] }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </table>
+    </body>
+</html>
